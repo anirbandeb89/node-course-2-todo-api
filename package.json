@@ -16,5 +16,9 @@
     "mongodb": "^3.0.8",
     "mongoose": "^5.1.2",
     "validator": "^10.2.0"
+  },
+  "engines":{
+    "node" : "heroko8.10.0"
   }
+
 }

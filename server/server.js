@@ -6,6 +6,8 @@ var {Todo} = require('./models/Todo');
 var {User} = require('./models/user');
 var _ = require('lodash');
 
+const port = process.env.PORT || 3000 
+
 var app = new express();
 
 app.use(bodyParser.json());
@@ -70,6 +72,6 @@ app.post('/users',(req,res)=>{
 
 
 
-app.listen(3000,()=>{
-    console.log('Server listening at port 3000');
+app.listen(port,()=>{
+    console.log(`Server listening at port ${port}`);
 });
