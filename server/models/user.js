@@ -47,7 +47,7 @@ UserSchema.methods.generateAuthToken = function(){   //Not using arrow function 
 
     user.tokens.push({     //used ES6 type of assigning value
         access,
-        token
+        token 
     });
 
     return user.save().then(()=>{
@@ -55,6 +55,29 @@ UserSchema.methods.generateAuthToken = function(){   //Not using arrow function 
         return token;
     });
 }
+
+//Creates a model method as instance method
+UserSchema.statics.findByToken = function(token){
+   var User = this; 
+   var decoded;
+   try{
+    console.log("Token",token);
+    decoded = jwt.verify(token,'abc123');
+    console.log(decoded);
+   }catch(e){  
+       return new Promise((resolve,reject)=>{
+           return reject();
+       });
+
+    // return PermissionRequestedEvent.reject();    // other way to do the same
+   }
+
+   return  User.findOne({    //creating a chain promise 
+        '_id':decoded._id,
+        'tokens.token':token,
+        'tokens.access':'auth'
+   });         
+};
 
 var User = mongoose.model('User',UserSchema);
 

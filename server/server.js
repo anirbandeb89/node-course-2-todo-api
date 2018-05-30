@@ -4,6 +4,7 @@ var {ObjectID} = require('mongodb');
 var {mongoose} = require('./db/mongoose');
 var {Todo} = require('./models/todo');
 var {User} = require('./models/user');
+var {authentication} = require('./middleware/authentication');
 var _ = require('lodash');
 
 const port = process.env.PORT || 3000 
@@ -113,6 +114,11 @@ app.patch('/todos/:id',(req,res)=>{
       res.status(400).send();
   });
 
+});
+
+//Middleware
+app.get('/user/me',authentication,(req,res)=>{   // reference the function authoorization to use as middleware
+    res.send(req.user)
 });
 
 app.listen(port,()=>{
